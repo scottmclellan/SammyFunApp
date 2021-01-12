@@ -376,6 +376,7 @@ namespace SammyFunApp
             var speed = _coinFlip.Next(5, 15);
             _speed = _defaultSpeed = speed;
         }
+
     }
 
 }
