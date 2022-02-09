@@ -1,5 +1,5 @@
 pipeline {
-agent { node {label 'MSBuild'} }
+agent { node {label 'MSBuild_NETFramework'} }
   stages {
     stage('Build') {
       steps {
@@ -9,7 +9,7 @@ agent { node {label 'MSBuild'} }
     }   
     stage('Emailing') {
       steps {
-        echo 'Deploying....'
+        echo 'Emailing....'
       }
     }
   }
