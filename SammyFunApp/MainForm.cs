@@ -45,7 +45,10 @@ namespace SammyFunApp
 
             this.Cursor = cur;
 
-            SpeechHelper.Speak("Hey Sammy, welcome to the paint shop");
+            int day =  int.Parse(DateTime.Now.ToString("dd"));
+            string suff = day == 1 ? "st" : day == 2 ? "nd" : day == 3 ? "rd" : "th";
+
+            SpeechHelper.Speak($"Hey Sammy, it is {DateTime.Now.ToString("MMMMM")} {DateTime.Now.ToString("dd")}{suff}. Welcome to the paint shop");
 
             ToolStripButton[] buttons = {
                 new PaintColourButton("Red",null, CustomToolStripButtonOnCLick,Color.Red),
