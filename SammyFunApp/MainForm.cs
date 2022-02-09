@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Humanizer;
 using SammyFunApp.Utils;
 using static SammyFunApp.Utils.ResourceHelper;
 
@@ -33,7 +34,7 @@ namespace SammyFunApp
         private List<PeekabooBuddy> _peekabooBuddies = new List<PeekabooBuddy>();
         private void Form1_Load(object sender, EventArgs e)
         {
-            Text = "Sammy's Paint Shop";          
+            Text = "Sammy's Paint Shop";
 
             onLoadBorderStyle = this.FormBorderStyle;
             onLoadBounds = this.Bounds;
@@ -45,10 +46,9 @@ namespace SammyFunApp
 
             this.Cursor = cur;
 
-            int day =  int.Parse(DateTime.Now.ToString("dd"));
-            string suff = day == 1 ? "st" : day == 2 ? "nd" : day == 3 ? "rd" : "th";
+            string dayText = TranslateIntToWords(DateTime.Now.Day);
 
-            SpeechHelper.Speak($"Hey Sammy, it is {DateTime.Now.ToString("MMMMM")} {DateTime.Now.ToString("dd")}{suff}. Welcome to the paint shop");
+            SpeechHelper.Speak($"Hey Sammy, it is {DateTime.Now.ToString("MMMMM")} {dayText}. Welcome to the paint shop");
 
             ToolStripButton[] buttons = {
                 new PaintColourButton("Red",null, CustomToolStripButtonOnCLick,Color.Red),
@@ -72,11 +72,17 @@ namespace SammyFunApp
 
             this.toolStrip1.Items.AddRange(buttons);
 
-            var bunnyPeekaBoo = new PeekabooBuddy("mcqueen", "mater", "doc","mcmissile","luigi","sally");
+            var bunnyPeekaBoo = new PeekabooBuddy("mcqueen", "mater", "doc", "mcmissile", "luigi", "sally");
             this.pictureBox1.Controls.Add(bunnyPeekaBoo);
             this._peekabooBuddies.Add(bunnyPeekaBoo);
-            bunnyPeekaBoo.Start();          
+            bunnyPeekaBoo.Start();
 
+        }
+
+        private string TranslateIntToWords(int dayNumber)
+        {
+            var culture = System.Globalization.CultureInfo.CurrentCulture;
+            return dayNumber.ToWords(culture); // 543 -> five hundred forty-three
         }
 
         private Color _penColor = Color.Black;
@@ -186,7 +192,7 @@ namespace SammyFunApp
         {
             _lastPoint = e.Location;
             rightMouseButtonClicked = true;
-            
+
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -245,14 +251,14 @@ namespace SammyFunApp
         public void SetScreenMode()
         {
             if (!_isFullScreen)
-            {                
+            {
                 this.WindowState = FormWindowState.Normal;
                 this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
                 this.Bounds = Screen.PrimaryScreen.Bounds;
                 this._isFullScreen = true;
             }
             else
-            {               
+            {
                 this.WindowState = FormWindowState.Maximized;
                 this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
                 this._isFullScreen = false;
