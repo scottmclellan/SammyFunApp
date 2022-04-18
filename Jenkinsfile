@@ -15,7 +15,7 @@ agent { node {label 'MSBuild_NETFramework'} }
         echo 'Zipping'
         dir('SammyFunApp\\bin\\Release\\'){
           bat 'cd'
-          bat "\"C:\\Program Files\\7-Zip\\7z.exe\" a ${env.JOB_NAME}.${env.BUILD_ID}.zip"
+          bat "\"C:\\Program Files\\7-Zip\\7z.exe\" a SammyFunApp.${env.BUILD_ID}.zip"
         }
       }
     }   
@@ -23,7 +23,7 @@ agent { node {label 'MSBuild_NETFramework'} }
       steps {
         echo 'Emailing....'
         dir('SammyFunApp\\bin\\Release\\'){
-        bat "xcopy ${env.JOB_NAME}.${env.BUILD_ID}.zip C:\\Jenkins\\Artifacts"
+        bat "xcopy SammyFunApp.${env.BUILD_ID}.zip C:\\Jenkins\\Artifacts"
         }
       }
     }
