@@ -14,6 +14,27 @@
       ]
     },
     {
+      "ColourName": "Black",
+      "Objects": [
+        {
+          "Name": "Penguin",
+          "Description": "A short flightless bird, they make their nests out of stones, that sounds uncomfortable!"
+        },
+        {
+          "Name": "Lump of coal",
+          "Description": "This is what kids who dont listen to mommy and daddy get for Christmas!"
+        },
+        {
+          "Name": "Hockey puck",
+          "Description": "You can shoot this into the net for a goal. Sammy scores!"
+        },
+        {
+          "Name": "Winter hat",
+          "Description": "Protects your ears when its chilly outside!"
+        }
+      ]
+    },
+    {
       "ColourName": "Orange",
       "Objects": [
         {
@@ -23,6 +44,10 @@
         {
           "Name": "Tiger",
           "Description": "Animal that loves to hide in the jungle"
+        },
+        {
+          "Name": "A cup of orange juice",
+          "Description": "Sammy loves a big cup of this stuff, so tasty"
         }
       ]
     },
@@ -44,6 +69,10 @@
         {
           "Name": "Lightning McQueen",
           "Description": "Float like a Cadillac, sting like a Beemer.!"
+        },
+        {
+          "Name": "Lego Steam Train",
+          "Description": "Just like the one that you play with in the basement. Toot toot!"
         }
       ]
     },
@@ -57,6 +86,14 @@
         {
           "Name": "Chocolate",
           "Description": "Mmmm messy but sooo tasty!"
+        },
+        {
+          "Name": "Bo",
+          "Description": "Our grumpy dog with little legs!"
+        },
+        {
+          "Name": "Piece of toast",
+          "Description": "Sammy loves to eat this with peanut butter and jam!"
         }
       ]
     },
@@ -70,6 +107,10 @@
         {
           "Name": "Sky",
           "Description": "Where the clouds live!"
+        },
+        {
+          "Name": "Ocean",
+          "Description": "This is where the sharks and wales live!"
         }
       ]
     },
@@ -83,6 +124,10 @@
         {
           "Name": "Barney the Dinosaur",
           "Description": "A favourite show from when mommy and daddy were little!"
+        },
+        {
+          "Name": "Eggplant",
+          "Description": "You can make pizza our of this somehow!"
         }
       ]
     },
@@ -125,6 +170,10 @@
         {
           "Name": "Cucumber",
           "Description": "Sammy eats one of these every supper!"
+        },
+        {
+          "Name": "Garbage Truck",
+          "Description": "It comes every Monday morning and sometimes honks at you!"
         }
       ]
     }
