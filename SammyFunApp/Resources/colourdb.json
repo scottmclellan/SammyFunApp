@@ -96,6 +96,14 @@
         {
           "Name": "Sprinkled Donut",
           "Description": "Daddy's favourite treat!"
+        },
+        {
+          "Name": "Flamingo",
+          "Description": "Weird bird that stands on one leg!"
+        },
+        {
+          "Name": "Cotton candy",
+          "Description": "A treat that looks like a fluffy cloud!"
         }
       ]
     },
@@ -113,6 +121,10 @@
         {
           "Name": "Lime",
           "Description": "Super yummy to put on guacamole!"
+        },
+        {
+          "Name": "Cucumber",
+          "Description": "Sammy eats one of these every supper!"
         }
       ]
     }
