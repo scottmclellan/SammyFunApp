@@ -5,7 +5,7 @@
 	<?define ManufacturerName="McLellan Technologies"?>
 	<?define AppDescription="Simple paint app that helps teach colours"?>
 	<Product Name="$(var.AppName)" Manufacturer="$(var.ManufacturerName)" Id="056C8DDF-D9D9-4182-BA4F-5685A0AFE375" UpgradeCode="056C8DDF-D9D9-4182-BA4F-5685A0AFE375" Language="1033" Codepage="1252" Version="1.0.0">
-		<Package Id="*" Keywords="Installer" Description="$(var.AppName) 1.0 Installer" Comments="$(var.AppName) is a registered trademark of $(var.ManufacturerName)." Manufacturer="$(var.ManufacturerName)" />
+		<Package Id="*" Compressed="yes" Keywords="Installer" Description="$(var.AppName) 1.0 Installer" Comments="$(var.AppName) is a registered trademark of $(var.ManufacturerName)." Manufacturer="$(var.ManufacturerName)" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of $(var.AppName) is already installed." />
 		<MediaTemplate EmbedCab="yes"/>
@@ -13,13 +13,13 @@
 		<Icon Id="icon.ico" SourceFile="$(var.SammyPaintShop_TargetDir)Resources\sammypaintshop.ico"/>
 		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
-		
+
 		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR"/>
 		<UIRef Id="WixUI_InstallDir" />
 
-		<WixVariable Id="WixUILicenseRtf" Value="$(var.SammyPaintShop_TargetDir)Resources\license.rtf" />	
-		
-		
+		<WixVariable Id="WixUILicenseRtf" Value="$(var.SammyPaintShop_TargetDir)Resources\license.rtf" />
+
+
 		<WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.bmp" />
 		<WixVariable Id="WixUIDialogBmp" Value="WixUIDialogBmp.bmp" />
 
@@ -35,7 +35,7 @@
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder" Name="PFiles">
+			<Directory Id="ProgramFilesFolder">
 				<Directory Id="McLellanTechnologies" Name="$(var.ManufacturerName)">
 					<Directory Id="INSTALLDIR" Name="$(var.AppName)">
 						<Directory Id="INSTALLDIR_Resources" Name="Resources"/>
@@ -48,43 +48,31 @@
 			<Directory Id="DesktopFolder" Name="Desktop"/>
 		</Directory>
 	</Fragment>
-	
-	
 
-	<!--<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			-->
-	<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-	<!--
-			-->
-	<!-- <Component Id="ProductComponent"> -->
-	<!--
-				-->
-	<!-- TODO: Insert files, registry keys, and other resources here. -->
-	<!--
-			-->
-	<!-- </Component> -->
-	<!--
-		</ComponentGroup>
-	</Fragment>-->
+
+	
 	<Fragment>
 		<ComponentGroup Id="INSTALLDIR_files" Directory="INSTALLDIR">
 			<Component Id="SammyPaintShop.exe" Guid="b9988d10-28be-4ba3-808b-9c3070e411a6">
 				<File Id="SammyPaintShop.exe" Name="SammyPaintShop.exe" Source="$(var.SammyPaintShop_TargetDir)SammyPaintShop.exe" KeyPath="yes" />
 			</Component>
 			<Component Id="SammyPaintShop.exe.config" Guid="c052ef62-18ee-4dfd-835d-ce0be30654b9">
-				<File Id="SammyPaintShop.exe.config" Name="SammyPaintShop.exe.config" Source="$(var.SammyPaintShop_TargetDir)SammyPaintShop.exe.config" />
+				<File Id="SammyPaintShop.exe.config" Name="SammyPaintShop.exe.config" Source="$(var.SammyPaintShop_TargetDir)SammyPaintShop.exe.config" KeyPath="yes" />
 			</Component>
 			<Component Id="Newtonsoft.Json.dll" Guid="4915250d-c26f-40db-ba76-1c2402419100">
-				<File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.SammyPaintShop_TargetDir)Newtonsoft.Json.dll" />
+				<File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.SammyPaintShop_TargetDir)Newtonsoft.Json.dll" KeyPath="yes" />
 			</Component>
 			<Component Id="Humanizer.dll" Guid="c8678c03-1fe4-40b3-9a48-1c00c2a69782">
-				<File Id="Humanizer.dll" Name="Humanizer.dll" Source="$(var.SammyPaintShop_TargetDir)Humanizer.dll" />
-			</Component>			
+				<File Id="Humanizer.dll" Name="Humanizer.dll" Source="$(var.SammyPaintShop_TargetDir)Humanizer.dll" KeyPath="yes" />
+			</Component>
 		</ComponentGroup>
-		<Component Id="ColourDB" Guid="96CDF501-A885-4306-B766-2F62A59DF278" Directory="INSTALLDIR_Resources" >
-			<File Id="ColourDB.json" Name="colourdb.json" Source="$(var.SammyPaintShop_TargetDir)Resources\ColourDB.json" />
-		</Component>
+
+		<DirectoryRef Id="INSTALLDIR_Resources">
+			<Component Id="ColourDB" Guid="96CDF501-A885-4306-B766-2F62A59DF278"  >
+				<File Id="ColourDB.json" Name="colourdb.json" Source="$(var.SammyPaintShop_TargetDir)Resources\ColourDB.json" />
+			</Component>
+		</DirectoryRef>
+
 		<DirectoryRef Id="ApplicationProgramsFolder">
 			<Component Id="ApplicationShortcut" Guid="AA2A793B-F623-4E1E-A001-4D0DB08D4458">
 				<Shortcut Id="ApplicationStartMenuShortcut"
