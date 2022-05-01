@@ -34,7 +34,7 @@ agent { node {label 'MSBuild_NETFramework'} }
     {
       steps{
         bat "echo %PATH%"
-        bat "gh release create v1.0.${env.BUILD_ID} SetupProject\\bin\\Release\\SammyPaintShop.msi"
+        bat "\"C:\\Program Files\\GitHub CLI\\gh.exe\" release create v1.0.${env.BUILD_ID} SetupProject\\bin\\Release\\SammyPaintShop.msi"
       }
     }
     stage('Cleaning Workspace')
