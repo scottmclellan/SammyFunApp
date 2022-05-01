@@ -26,7 +26,7 @@ agent { node {label 'MSBuild_NETFramework'} }
         bat "xcopy SammyFunApp.${env.BUILD_ID}.zip C:\\Jenkins\\Artifacts"
         }
         dir('SetupProject\\bin\\Release\\'){
-          bat "xcopy SammyPaintShopSetup.msi C:\\Jenkins\\Artifacts"
+          bat "xcopy SammyPaintShopSetup.msi C:\\Jenkins\\Artifacts /Y"
         }
       }
     }
