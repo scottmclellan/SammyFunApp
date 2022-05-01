@@ -30,6 +30,12 @@ agent { node {label 'MSBuild_NETFramework'} }
         }
       }
     }
+    stage('Creating Release')
+    {
+      steps{
+        bat "gh release create v1.0.${env.BUILD_ID} SetupProject\\bin\\Release\\SammyPaintShop.msi"
+      }
+    }
     stage('Cleaning Workspace')
     {
       steps{
