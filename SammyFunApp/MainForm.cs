@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Humanizer;
 using SammyFunApp.Utils;
 using static SammyFunApp.Utils.ResourceHelper;
 
@@ -48,7 +47,13 @@ namespace SammyFunApp
 
             string dayText = TranslateIntToWords(DateTime.Now.Day);
 
-            SpeechHelper.Speak($"Hey Sammy, it is {DateTime.Now.ToString("MMMMM")} {dayText}. Welcome to the paint shop");
+            PlayGreeting();
+
+            //SpeechHelperMp3.Instance.Speak("Good morning", "Good morning");
+            //Action b1 = () => SpeechHelper.Instance.Speak("boing");
+            //SpeechHelper.Instance.SpeakAsync(b1, "boing");
+
+            //SpeechHelper.Instance.Speak("boing", "boing", "boing", "boing", "boing", "boing", "boing");
 
             ToolStripButton[] buttons = {
                 new PaintColourButton("Red",null, CustomToolStripButtonOnCLick,Color.Red),
@@ -79,10 +84,35 @@ namespace SammyFunApp
 
         }
 
+        private void PlayGreeting()
+        {
+            string greeting = string.Empty;
+            int currentHour = DateTime.Now.Hour;
+
+            if (currentHour < 12)
+                greeting = "Good morning";
+            else if (currentHour >= 12 && currentHour <= 18)
+                greeting = "Good afternoon";
+            else
+                greeting = "Good evening";
+
+            SpeechHelper.Instance.Speak(greeting, "Sammy", "it is", DateTime.Now.ToString("MMMMM"), TranslateIntToWords(DateTime.Now.Day), "Welcome to the paint shop");
+
+        }
+
         private string TranslateIntToWords(int dayNumber)
         {
-            var culture = System.Globalization.CultureInfo.CurrentCulture;
-            return dayNumber.ToWords(culture); // 543 -> five hundred forty-three
+            switch (dayNumber.ToString().Reverse().First())
+            {
+                case '1':
+                    return $"{dayNumber}st";
+                case '2':
+                    return $"{dayNumber}nd";
+                case '3':
+                    return $"{dayNumber}rd";
+                default:
+                    return $"{dayNumber}th";
+            }
         }
 
         private Color _penColor = Color.Black;
@@ -131,9 +161,9 @@ namespace SammyFunApp
                     var colourObject = _colourDB.GetRandomObject(button.Text);
 
                     if (colourObject == null)
-                        SpeechHelper.SpeakAsync($"{button.Text}", (t) => this.toolStrip1.Enabled = true);
+                        SpeechHelper.Instance.SpeakAsync(() => this.toolStrip1.Enabled = true, button.Text);
                     else
-                        SpeechHelper.SpeakAsync($"{button.Text}. You can draw a {colourObject.Name}! {colourObject.Description}.", (t) => toolStrip1.Enabled = true);
+                        SpeechHelper.Instance.SpeakAsync(() => toolStrip1.Enabled = true, button.Text, $"You can draw a {colourObject.Name}. {colourObject.Description}");
                 }
 
                 _penColor = button.BackColor;
@@ -240,7 +270,7 @@ namespace SammyFunApp
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SpeechHelper.Speak("Night night Sammy");
+            SpeechHelper.Instance.Speak("Night night Sammy");
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)

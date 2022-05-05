@@ -126,6 +126,100 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Audio\02A73A008B838D08FDA20337F72D5947.wav" />
+    <EmbeddedResource Include="Audio\0482AA3C5D740C055A07BE7823F636C0.wav" />
+    <EmbeddedResource Include="Audio\06D46DCC2A6124C7AE55F19C3C51AFE0.wav" />
+    <EmbeddedResource Include="Audio\08B5893EEF4E9743E91090B5ED979DB7.wav" />
+    <EmbeddedResource Include="Audio\0FA14C6F02392C5BCAAAA979552DE664.wav" />
+    <EmbeddedResource Include="Audio\1182C612376516EC796F65F6A5282600.wav" />
+    <EmbeddedResource Include="Audio\11F16F6C5E01A25101CD4025D22148E9.wav" />
+    <EmbeddedResource Include="Audio\195BACF7E750C1407884783CFBB28C02.wav" />
+    <EmbeddedResource Include="Audio\1D82D4C18D9FE24D27ED9962EA091ED4.wav" />
+    <EmbeddedResource Include="Audio\1FFD9E753C8054CC61456AC7FAC1AC89.wav" />
+    <EmbeddedResource Include="Audio\2908BC53DC3A0F0E2C620E1E1A6DB010.wav" />
+    <EmbeddedResource Include="Audio\2A7495184B2FEB902A3BEEC18A439419.wav" />
+    <EmbeddedResource Include="Audio\2B0C59A08713D3158CBBC7109B0FBAAA.wav" />
+    <EmbeddedResource Include="Audio\2B849500E4585DAB4196EC9A415EDF8F.wav" />
+    <EmbeddedResource Include="Audio\32BF1105881C93D44A4C70DB143AFCD6.wav" />
+    <EmbeddedResource Include="Audio\3329633262C4780F802A9BBF022A1B5A.wav" />
+    <EmbeddedResource Include="Audio\35D548E025BE1DFF83C21A345784EBAF.wav" />
+    <EmbeddedResource Include="Audio\3785A4F12840727F9FC71676C104AC0D.wav" />
+    <EmbeddedResource Include="Audio\37D153A06C79E99E4DE5889DBE2E7C57.wav" />
+    <EmbeddedResource Include="Audio\4385695633F8C6C8AB52592092CECF04.wav" />
+    <EmbeddedResource Include="Audio\45C2CA10522952363EC8471E3194077C.wav" />
+    <EmbeddedResource Include="Audio\465660608EA35AC485FF2E9BFBF9AC08.wav" />
+    <EmbeddedResource Include="Audio\467B6140FE3BB958F2332983914DE787.wav" />
+    <EmbeddedResource Include="Audio\48D6215903DFF56238E52E8891380C8F.wav" />
+    <EmbeddedResource Include="Audio\4A0B0DCEDD48F780778D1CD1BB8F9877.wav" />
+    <EmbeddedResource Include="Audio\4C56921AEC2E6273F40E714B346CC5A2.wav" />
+    <EmbeddedResource Include="Audio\4D04CEDD6D05B1F16A4404FF5A1FA4AF.wav" />
+    <EmbeddedResource Include="Audio\515DA2CAF582AC4801CBB5D876C73C90.wav" />
+    <EmbeddedResource Include="Audio\534810343C47F3C4AE1969BFF1D4A5BC.wav" />
+    <EmbeddedResource Include="Audio\54E5136E2D206162EC6CEC2A80AC2007.wav" />
+    <EmbeddedResource Include="Audio\5823BB7647C9C52AE90DBEF4A295FCA3.wav" />
+    <EmbeddedResource Include="Audio\5BAB23F69D6DE56193202D65AD5A1523.wav" />
+    <EmbeddedResource Include="Audio\5CAC99F4E707DD6FA41068D4DF61ADF4.wav" />
+    <EmbeddedResource Include="Audio\61A590F1B9B5548EFBAE70FD7BCF45B3.wav" />
+    <EmbeddedResource Include="Audio\623A7D1C7176161EF140980756EC9661.wav" />
+    <EmbeddedResource Include="Audio\6335A487D7B36DCDC7836AAFBCEBE448.wav" />
+    <EmbeddedResource Include="Audio\6B9188B6CA8A3ED211B5A3AF3F8ED555.wav" />
+    <EmbeddedResource Include="Audio\6FF47AFA5DC7DAA42CC705A03FCA8A9B.wav" />
+    <EmbeddedResource Include="Audio\71CFCF6333F1D679BC3310D0E55E3F1B.wav" />
+    <EmbeddedResource Include="Audio\727C6A8FFC7B2467413B1D4EF7178FB5.wav" />
+    <EmbeddedResource Include="Audio\75FC18DC0CA93FD98288ED3D604EE461.wav" />
+    <EmbeddedResource Include="Audio\763EBEE4DEB0BCF646A684D5BDD525B7.wav" />
+    <EmbeddedResource Include="Audio\7F41F7062FE82F65489485B397053298.wav" />
+    <EmbeddedResource Include="Audio\8042241C1AE4418D4A90669606846309.wav" />
+    <EmbeddedResource Include="Audio\80A000056880689825EDFBB971E4922A.wav" />
+    <EmbeddedResource Include="Audio\838C697FBD07C690ED988AA4115B77B7.wav" />
+    <EmbeddedResource Include="Audio\8913FFC6A79BB864BC50CD8A5A4DB194.wav" />
+    <EmbeddedResource Include="Audio\8EB8E307A6D649BC7FB51443A06A216F.wav" />
+    <EmbeddedResource Include="Audio\961C0D6780A3C7F97B15F69053F6C87F.wav" />
+    <EmbeddedResource Include="Audio\9A143FE053ACFCF83F43842B0A9C7072.wav" />
+    <EmbeddedResource Include="Audio\9A4B6F884971DCB4A5172876B335BAAB.wav" />
+    <EmbeddedResource Include="Audio\9D5F1209E8ED0E9C93F363BC81F7272C.wav" />
+    <EmbeddedResource Include="Audio\9F27410725AB8CC8854A2769C7A516B8.wav" />
+    <EmbeddedResource Include="Audio\A00CEEFB0ECA108B717037C020751157.wav" />
+    <EmbeddedResource Include="Audio\A283C23D280371C50DA3B3D7C02833C1.wav" />
+    <EmbeddedResource Include="Audio\A8533417845AAD26944D8F23047B67DD.wav" />
+    <EmbeddedResource Include="Audio\A859AE51CD0254CEF26126EC100C7884.wav" />
+    <EmbeddedResource Include="Audio\AAEEB4104C84D85DAFBAC73BF5ED81D7.wav" />
+    <EmbeddedResource Include="Audio\B2EFAD09F94208DED4E3C07B8CA34109.wav" />
+    <EmbeddedResource Include="Audio\B7B655045B89200C7A4DEDB1303CA2F1.wav" />
+    <EmbeddedResource Include="Audio\BB7AEDFA61007447DD6EFAF9F37641E3.wav" />
+    <EmbeddedResource Include="Audio\BBB23621FAE7AA3D56955169EFD7AC27.wav" />
+    <EmbeddedResource Include="Audio\BDA9643AC6601722A28F238714274DA4.wav" />
+    <EmbeddedResource Include="Audio\C13DA15C6217BB1EA89D9E670CE445BE.wav" />
+    <EmbeddedResource Include="Audio\C51D824915B310E5BA328551D23C13C7.wav" />
+    <EmbeddedResource Include="Audio\C6C7FA0CA3113D1F6F5333FCE2B2F9FB.wav" />
+    <EmbeddedResource Include="Audio\C90F82F79C8EF552E3E8B5810CFC1FBE.wav" />
+    <EmbeddedResource Include="Audio\CB11EA7A5DC1A9A85349D5C065A1CCCF.wav" />
+    <EmbeddedResource Include="Audio\CEB7E32C2C64AD105CA56E128E89DDDE.wav" />
+    <EmbeddedResource Include="Audio\CFCFD9E6DA47834DF7227467414BB434.wav" />
+    <EmbeddedResource Include="Audio\D072962C3FF6D547EB14BD03C9D46392.wav" />
+    <EmbeddedResource Include="Audio\D487DD0B55DFCACDD920CCBDAEAFA351.wav" />
+    <EmbeddedResource Include="Audio\D508FE45CECAF653904A0E774084BB5C.wav" />
+    <EmbeddedResource Include="Audio\D8F49076534BFB6E3E46C3D93E2E13F6.wav" />
+    <EmbeddedResource Include="Audio\D9501F74663F2122B15D5D756A404359.wav" />
+    <EmbeddedResource Include="Audio\E0466094B1CD89703B0B259D3EC5C9E8.wav" />
+    <EmbeddedResource Include="Audio\E12FCFEC99F29045B09909C5ABB3835D.wav" />
+    <EmbeddedResource Include="Audio\E4754988649D9F2D20222F2606B21B02.wav" />
+    <EmbeddedResource Include="Audio\E60A95F3F443E37F5A47210D9B340A05.wav" />
+    <EmbeddedResource Include="Audio\E72FF831DBCEB5BF11B0A31B81327631.wav" />
+    <EmbeddedResource Include="Audio\E9515AB3FB7942919AA485D766F5BC28.wav" />
+    <EmbeddedResource Include="Audio\EA9A2C9CEEEEFAAF556E1E1004AD40C2.wav" />
+    <EmbeddedResource Include="Audio\EC31383CC75B7EF7915803F99562CBE8.wav" />
+    <EmbeddedResource Include="Audio\ECD63C220F96C69844085D6E16B9C44D.wav" />
+    <EmbeddedResource Include="Audio\EDD6D68998655B2AB016909BA460C9DE.wav" />
+    <EmbeddedResource Include="Audio\F1D2DCB3E3AA5326A9B50F1FE65EF59A.wav" />
+    <EmbeddedResource Include="Audio\F3BBCA659EC69039322831AF286D859B.wav" />
+    <EmbeddedResource Include="Audio\FA8460FEFA8CD158BD36A501344344E4.wav" />
+    <EmbeddedResource Include="Audio\FBBF172734BDFBA05C87A0AD956BD3E7.wav" />
+    <EmbeddedResource Include="Audio\FE01D67A002DFA0F3AC084298142ECCD.wav" />
+    <EmbeddedResource Include="Audio\2B3FAD13034796ABE7982F1E7BDEC3CD.wav" />
+    <EmbeddedResource Include="Audio\CC4B51B695A31CD3373F2E4B7CAE46DB.wav" />
+    <EmbeddedResource Include="Audio\1e2bbd03b6e07edbf212ac6b4b9276ea.wav" />
+    <EmbeddedResource Include="Audio\230e216f8d80e5d88c91310f149b6112.wav" />
     <Content Include="Resources\license.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -182,12 +276,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Humanizer">
-      <Version>2.14.1</Version>
+    <PackageReference Include="NAudio">
+      <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

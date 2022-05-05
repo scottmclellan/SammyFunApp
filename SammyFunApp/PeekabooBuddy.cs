@@ -253,7 +253,7 @@ namespace SammyFunApp
 
         private void PeekabooBuddy_MouseClick(object sender, MouseEventArgs e)
         {
-           
+            SpeechHelper.Instance.Speak("boing", "boing");
             _speed = 30;
             this.Image = _preScareImage;
             SetDestination(_origination.Value.X, _origination.Value.Y);

@@ -61,10 +61,7 @@
 			</Component>
 			<Component Id="Newtonsoft.Json.dll" Guid="4915250d-c26f-40db-ba76-1c2402419100">
 				<File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.SammyPaintShop_TargetDir)Newtonsoft.Json.dll" KeyPath="yes" />
-			</Component>
-			<Component Id="Humanizer.dll" Guid="c8678c03-1fe4-40b3-9a48-1c00c2a69782">
-				<File Id="Humanizer.dll" Name="Humanizer.dll" Source="$(var.SammyPaintShop_TargetDir)Humanizer.dll" KeyPath="yes" />
-			</Component>
+			</Component>			
 		</ComponentGroup>
 
 		<DirectoryRef Id="INSTALLDIR_Resources">
