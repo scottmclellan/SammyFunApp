@@ -116,7 +116,7 @@ namespace SammyFunApp
         }
 
         private Color _penColor = Color.Black;
-        private int _penSize = 2;
+        private int _previousSize, _penSize = 2;
         private Dictionary<string, DateTime> _colorsPicked = new Dictionary<string, DateTime>();
         private void CustomToolStripButtonOnCLick(object sender, EventArgs e)
         {
@@ -128,9 +128,18 @@ namespace SammyFunApp
             }
 
             if (sender is PaintBrushSizeButton)
-            {
+            {                
                 var button = sender as PaintBrushSizeButton;
-                _penSize = button.PenSize;
+
+                this.toolStrip1.Enabled = false;
+
+                if (_previousSize < button.PenSize)
+                    SpeechHelper.Instance.SpeakAsync(() => this.toolStrip1.Enabled = true, "up");
+                else
+                    SpeechHelper.Instance.SpeakAsync(() => this.toolStrip1.Enabled = true, "down");
+
+                _previousSize= _penSize = button.PenSize;
+                
                 this.Cursor = CursorHelper.GetColourCursor(_penColor, CursorHelper.AppCursor.Pen, CursorHelper.GetCursorSize(_penSize));
                 return;
             }

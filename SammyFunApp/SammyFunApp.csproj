@@ -221,6 +221,8 @@
     <EmbeddedResource Include="Audio\1e2bbd03b6e07edbf212ac6b4b9276ea.wav" />
     <EmbeddedResource Include="Audio\230e216f8d80e5d88c91310f149b6112.wav" />
     <EmbeddedResource Include="Audio\4568c103426a8464217007d9c4225caf.wav" />
+    <EmbeddedResource Include="Audio\46c48bec0d282018b9d167eef7711b2c.wav" />
+    <EmbeddedResource Include="Audio\74e8333ad11685ff3bdae589c8f6e34d.wav" />
     <Content Include="Resources\license.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
