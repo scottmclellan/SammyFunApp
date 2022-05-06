@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -48,6 +49,15 @@ namespace SammyFunApp
                     sb.Append(hashBytes[i].ToString("X2"));
                 }
                 return sb.ToString();
+            }
+        }
+
+        public static byte[] ToArray(this Stream stream)
+        {
+            using (var ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                return ms.ToArray();
             }
         }
     }

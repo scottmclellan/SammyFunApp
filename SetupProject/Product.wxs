@@ -4,7 +4,7 @@
 	<?define AppName="Sammy's Paint Shop"?>
 	<?define ManufacturerName="McLellan Technologies"?>
 	<?define AppDescription="Simple paint app that helps teach colours"?>
-	<Product Name="$(var.AppName)" Manufacturer="$(var.ManufacturerName)" Id="056C8DDF-D9D9-4182-BA4F-5685A0AFE375" UpgradeCode="056C8DDF-D9D9-4182-BA4F-5685A0AFE375" Language="1033" Codepage="1252" Version="1.0.0">
+	<Product  Name="$(var.AppName)"  Manufacturer="$(var.ManufacturerName)" Id="*" UpgradeCode="056C8DDF-D9D9-4182-BA4F-5685A0AFE375" Language="1033" Codepage="1252" Version="!(bind.FileVersion.SammyPaintShop)">
 		<Package Id="*" Compressed="yes" Keywords="Installer" Description="$(var.AppName) 1.0 Installer" Comments="$(var.AppName) is a registered trademark of $(var.ManufacturerName)." Manufacturer="$(var.ManufacturerName)" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of $(var.AppName) is already installed." />
@@ -54,14 +54,45 @@
 	<Fragment>
 		<ComponentGroup Id="INSTALLDIR_files" Directory="INSTALLDIR">
 			<Component Id="SammyPaintShop.exe" Guid="b9988d10-28be-4ba3-808b-9c3070e411a6">
-				<File Id="SammyPaintShop.exe" Name="SammyPaintShop.exe" Source="$(var.SammyPaintShop_TargetDir)SammyPaintShop.exe" KeyPath="yes" />
+				<File Id="SammyPaintShop" Name="SammyPaintShop.exe" Source="$(var.SammyPaintShop_TargetDir)SammyPaintShop.exe" KeyPath="yes" />
 			</Component>
 			<Component Id="SammyPaintShop.exe.config" Guid="c052ef62-18ee-4dfd-835d-ce0be30654b9">
 				<File Id="SammyPaintShop.exe.config" Name="SammyPaintShop.exe.config" Source="$(var.SammyPaintShop_TargetDir)SammyPaintShop.exe.config" KeyPath="yes" />
 			</Component>
 			<Component Id="Newtonsoft.Json.dll" Guid="4915250d-c26f-40db-ba76-1c2402419100">
 				<File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.SammyPaintShop_TargetDir)Newtonsoft.Json.dll" KeyPath="yes" />
-			</Component>			
+			</Component>
+			<Component Id="Microsoft.Win32.Registry.dll" Guid="859CC557-7513-45F7-8296-8931D515F3F0">
+				<File Id="Microsoft.Win32.Registry.dll" Name="Microsoft.Win32.Registry.dll" Source="$(var.SammyPaintShop_TargetDir)Microsoft.Win32.Registry.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="NAudio.Asio.dll" Guid="{9CBEA805-00B7-482D-8C1C-A4EDD53A92BB}">
+				<File Id="NAudio.Asio.dll" Name="NAudio.Asio.dll" Source="$(var.SammyPaintShop_TargetDir)NAudio.Asio.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="NAudio.Core.dll" Guid="{B6DFC713-7B92-45FC-8775-DD6D3A364C34}">
+				<File Id="NAudio.Core.dll" Name="NAudio.Core.dll" Source="$(var.SammyPaintShop_TargetDir)NAudio.Core.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="NAudio.dll" Guid="{8B6A6D2C-A4D9-46D6-B440-AB221C118970}">
+				<File Id="NAudio.dll" Name="NAudio.dll" Source="$(var.SammyPaintShop_TargetDir)NAudio.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="NAudio.Midi.dll" Guid="{011BFFAE-37E2-4D9C-9C5C-26FB51326CFD}">
+				<File Id="NAudio.Midi.dll" Name="NAudio.Midi.dll" Source="$(var.SammyPaintShop_TargetDir)NAudio.Midi.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="NAudio.Wasapi.dll" Guid="{26C5769D-A744-46A7-9852-10AE73D7A1BD}">
+				<File Id="NAudio.Wasapi.dll" Name="NAudio.Wasapi.dll" Source="$(var.SammyPaintShop_TargetDir)NAudio.Wasapi.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="NAudio.WinForms.dll" Guid="{E825A6DB-6AC2-419C-8BBD-B82BCC9BC60D}">
+				<File Id="NAudio.WinForms.dll" Name="NAudio.WinForms.dll" Source="$(var.SammyPaintShop_TargetDir)NAudio.WinForms.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="NAudio.WinMM.dll" Guid="{8165C515-1B48-4973-9E3A-ABD69968928F}">
+				<File Id="NAudio.WinMM.dll" Name="NAudio.WinMM.dll" Source="$(var.SammyPaintShop_TargetDir)NAudio.WinMM.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="System.Security.AccessControl.dll" Guid="{0939E0E9-C223-4A98-942C-C4A4C29F8539}">
+				<File Id="System.Security.AccessControl.dll" Name="System.Security.AccessControl.dll" Source="$(var.SammyPaintShop_TargetDir)System.Security.AccessControl.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="System.Security.Principal.Windows.dll" Guid="{BFC7B76A-8D2C-4AA0-9383-ED9399ECD2E0}">
+				<File Id="System.Security.Principal.Windows.dll" Name="System.Security.Principal.Windows.dll" Source="$(var.SammyPaintShop_TargetDir)System.Security.Principal.Windows.dll" KeyPath="yes" />				
+			</Component>
+		
 		</ComponentGroup>
 
 		<DirectoryRef Id="INSTALLDIR_Resources">
@@ -75,7 +106,7 @@
 				<Shortcut Id="ApplicationStartMenuShortcut"
 						  Name="$(var.AppName)"
 						  Description="$(var.AppDescription)"
-						  Target="[#SammyPaintShop.exe]"
+						  Target="[#SammyPaintShop]"
 						  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
 				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
 				<RegistryValue Root="HKCU" Key="Software\$(var.ManufacturerName)\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
@@ -83,7 +114,7 @@
 		</DirectoryRef>
 		<DirectoryRef Id="DesktopFolder">
 			<Component Id="ApplicationShortcutDesktop" Guid="90CF982E-9BF3-40E4-9EF6-A5EFECF066B0">
-				<Shortcut Id="ApplicationDesktopShortcut" Name="$(var.AppName)" Description="$(var.AppDescription)" Target="[#SammyPaintShop.exe]" WorkingDirectory="INSTALLFOLDER" />
+				<Shortcut Id="ApplicationDesktopShortcut" Name="$(var.AppName)" Description="$(var.AppDescription)" Target="[#SammyPaintShop]" WorkingDirectory="INSTALLFOLDER" />
 				<RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
 				<RegistryValue Root="HKCU" Key="Software\$(var.ManufacturerName)\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
 			</Component>

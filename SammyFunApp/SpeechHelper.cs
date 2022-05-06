@@ -31,21 +31,37 @@ namespace SammyFunApp
             PlayAudio(onComplete, messages);
         }
 
+        private Dictionary<string, byte[]> _audioCache = new Dictionary<string, byte[]>();
         private void PlayAudio(Action onPlayStop, params string[] messages)
         {
             //get audio
-            Stream[] audioStreams = new Stream[messages.Length];
+            byte[][] audioStreams = new byte[messages.Length][];
             Stream combinedStream = null;
 
+            string audioFileName;
 
             for (int i = 0; i < messages.Length; i++)
             {
-                audioStreams[i] = Utils.ResourceHelper.GetResourceData($"SammyFunApp.Audio.{messages[i].CreateFileName()}");
+                audioFileName = $"SammyFunApp.Audio.{messages[i].CreateFileName()}";
+
+                if (!_audioCache.ContainsKey(audioFileName))
+                {
+
+                    var tmp = Utils.ResourceHelper.GetResourceData(audioFileName);
+
+                    if (tmp == null) continue;
+
+                    _audioCache.Add(audioFileName, tmp.ToArray());
+                }
+
+                audioStreams[i] = _audioCache[audioFileName];
+
             }
 
+            if (audioStreams.Count(x => x != null) == 0) return;//nothing to play
 
             if (audioStreams.Length == 1)
-                combinedStream = audioStreams[0];
+                combinedStream = new MemoryStream(audioStreams[0]);
             else
             {
                 combinedStream = new MemoryStream(CombineStreams(audioStreams));
@@ -72,18 +88,31 @@ namespace SammyFunApp
 
         private byte[] CombineStreams(Stream[] audioStreams)
         {
-            MemoryStream tempStream = new MemoryStream();
-
-            return CombineStreamsCrossFade(audioStreams, tempStream);
+            return CombineStreamsCrossFade(audioStreams);
         }
 
-        private static byte[] CombineStreamsCrossFade(Stream[] audioStreams, MemoryStream tempStream)
+        private byte[] CombineStreams(byte[][] audioStreams)
+        {
+            return CombineStreamsCrossFade(audioStreams);
+        }
+
+
+        private static byte[] CombineStreamsCrossFade(byte[][] audioStreams)
+        {
+            return CombineStreamsCrossFade(audioStreams.Where(x => x != null).Select(x => new MemoryStream(x)).ToArray());
+        }
+
+
+        private static byte[] CombineStreamsCrossFade(Stream[] audioStreams)
         {
             WaveFormat waveformat = null;
             WaveFileWriter output = null;
             float volume;
             float volumemod;
             float[] sample;
+
+            MemoryStream tempStream = new MemoryStream();
+
             try
             {
                 // Alrighty.  Let's march over them.  We'll index them (rather than
@@ -217,185 +246,6 @@ namespace SammyFunApp
             }
         }
 
-        private static byte[] CombineStreamsInternal(Stream[] audioStreams, MemoryStream tempStream)
-        {
-            byte[] buffer = new byte[1024];
-            WaveFileWriter waveFileWriter = null;
-
-            try
-            {
-                bool firstFile = false;
-                bool lastFile = false;
-                //foreach (var stream in audioStreams)
-                for (int i = 0; i < audioStreams.Length; i++)
-                {
-                    // Get our first/last flags.
-                    firstFile = (i == 0);
-                    lastFile = (i == audioStreams.Length - 1);
-
-                    Stream stream = audioStreams[i];
-
-                    if (stream.CanSeek) stream.Seek(0, SeekOrigin.Begin);
-                    stream.Position = 0;
-
-                    //using (RawSourceWaveStream reader = new RawSourceWaveStream(stream, _wavFormat))
-                    using (WaveFileReader reader = new WaveFileReader(stream))
-                    {
-                        if (waveFileWriter == null)
-                        {
-                            // first time in create new Writer
-                            waveFileWriter = new WaveFileWriter(tempStream, reader.WaveFormat);
-                        }
-                        else
-                        {
-                            if (!reader.WaveFormat.Equals(waveFileWriter.WaveFormat))
-                            {
-                                throw new InvalidOperationException("Can't concatenate WAV Files that don't share the same format");
-                            }
-                        }
-
-
-                        int read;
-                        while ((read = reader.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            waveFileWriter.WriteData(buffer, 0, read);
-                        }
-                    }
-                }
-
-                waveFileWriter.Flush();
-
-                return tempStream.ToArray();
-            }
-            finally
-            {
-                if (waveFileWriter != null)
-                {
-                    waveFileWriter.Dispose();
-                }
-            }
-        }
-
-        public void Speak(params string[] text)
-        {
-            PlayAudio(null, text);
-        }
-    }
-
-
-    public sealed class SpeechHelperMp3
-    {
-        private static readonly Lazy<SpeechHelperMp3> lazy =
-            new Lazy<SpeechHelperMp3>(() => new SpeechHelperMp3());
-
-        public static SpeechHelperMp3 Instance { get { return lazy.Value; } }
-
-
-        private WaveOutEvent _wavPlayer;
-
-
-        private SpeechHelperMp3()
-        {
-
-        }
-
-        public void SpeakAsync(Action onComplete = null, params string[] messages)
-        {
-            PlayAudio(onComplete, messages);
-        }
-
-        private void PlayAudio(Action onPlayStop, params string[] messages)
-        {
-            //get audio
-            Stream[] audioStreams = new Stream[messages.Length];
-            Stream combinedStream = null;
-
-
-            for (int i = 0; i < messages.Length; i++)
-            {
-                audioStreams[i] = Utils.ResourceHelper.GetResourceData($"SammyFunApp.Audio.{messages[i].CreateFileNameMp3()}");
-            }
-
-
-            if (audioStreams.Length == 1)
-                combinedStream = audioStreams[0];
-            else
-            {
-                combinedStream = CombineStreams(audioStreams);
-            }
-
-
-            if (combinedStream == null) return;
-
-            if (combinedStream.CanSeek) combinedStream.Seek(0, SeekOrigin.Begin);
-
-            combinedStream.Position = 0;
-
-            _wavPlayer = new WaveOutEvent();
-            //var audioReader = new RawSourceWaveStream(combinedStream, _wavFormat);
-            var audioReader = new Mp3FileReader(combinedStream);
-            _wavPlayer.Init(audioReader);
-            _wavPlayer.Play();
-
-            _wavPlayer.PlaybackStopped += (o, e) =>
-            {
-                onPlayStop?.Invoke();
-                _wavPlayer.Dispose();
-            };
-        }
-
-        private Stream CombineStreams(Stream[] audioStreams)
-        {
-
-            Stream outputStream = new MemoryStream();
-
-            byte[] buffer = new byte[1024];
-
-            try
-            {
-                bool firstFile = false;
-                bool lastFile = false;
-                //foreach (var stream in audioStreams)
-                for (int i = 0; i < audioStreams.Length; i++)
-                {
-                    // Get our first/last flags.
-                    firstFile = (i == 0);
-                    lastFile = (i == audioStreams.Length - 1);
-
-                    Stream stream = audioStreams[i];
-
-                    if (stream.CanSeek) stream.Seek(0, SeekOrigin.Begin);
-                    stream.Position = 0;
-
-                    //using (RawSourceWaveStream reader = new RawSourceWaveStream(stream, _wavFormat))
-                    using (Mp3FileReader reader = new Mp3FileReader(stream))
-                    {
-                        if ((outputStream.Position == 0) && (reader.Id3v2Tag != null))
-                        {
-                            outputStream.Write(reader.Id3v2Tag.RawData, 0, reader.Id3v2Tag.RawData.Length);
-                        }
-
-                        Mp3Frame frame;
-
-                        while ((frame = reader.ReadNextFrame()) != null)
-                        {
-                            outputStream.Write(frame.RawData, 0, frame.RawData.Length);
-                        }
-
-                    }
-                }
-
-                return outputStream;
-
-            }
-            finally
-            {
-                //if (waveFileWriter != null)
-                //{
-                //    waveFileWriter.Dispose();
-                //}
-            }
-        }
 
         public void Speak(params string[] text)
         {

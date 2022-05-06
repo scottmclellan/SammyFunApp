@@ -122,6 +122,7 @@ namespace SammyFunApp
         {
             if (sender is TrashBinButton)
             {
+                SpeechHelper.Instance.Speak("toilet");
                 ClearPictureBox();
                 return;
             }

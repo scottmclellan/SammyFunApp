@@ -24,6 +24,7 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SetupProject.wax" />
     <Content Include="WixUIBannerBmp.bmp" />
     <Content Include="WixUIDialogBmp.bmp" />
   </ItemGroup>
