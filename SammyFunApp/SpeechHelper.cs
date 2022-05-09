@@ -12,31 +12,28 @@ using SammyFunApp.Utils;
 namespace SammyFunApp
 {
     public sealed class SpeechHelper
-    {
-        protected static class SpeechConstants
-        {
-            public const string WAV = "wav";
-            public  const string MP3 = "mp3";
-        }
+    {       
 
         private static readonly Lazy<SpeechHelper> lazy =
             new Lazy<SpeechHelper>(() => new SpeechHelper());
 
         public static SpeechHelper Instance { get { return lazy.Value; } }
 
-
         private WaveOutEvent _wavPlayer;
-        private WaveFormat _wavFormat = new WaveFormat(22050, 16, 1);
 
-        private SpeechHelper()
+        private SpeechHelper(){}
+
+        protected static class SpeechConstants
         {
-
+            public const string WAV = "wav";
+            public const string MP3 = "mp3";
         }
 
         public void SpeakAsync(Action onComplete = null, params string[] messages)
         {
             PlayAudio(onComplete, messages);
         }
+
         public class AudioFile { public string AudioType; public byte[] AudioData; }
         private Dictionary<string, AudioFile> _audioCache = new Dictionary<string, AudioFile>();
         private void PlayAudio(Action onPlayStop, params string[] messages)
@@ -51,17 +48,17 @@ namespace SammyFunApp
             {
                 audioFileName = $"SammyFunApp.Audio.{messages[i].CreateFileName()}";
 
-                if (!LoadWavFile(audioFileName))
-                    if (!LoadMp3File(audioFileName))
-                        continue;
+                if (!LoadWavFile(audioFileName) && !LoadMp3File(audioFileName))
+                    continue;
 
                 audioStreams[i] = _audioCache[audioFileName];
-
             }
 
-            if (audioStreams.Count(x => x != null) == 0) return;//nothing to play
+            audioStreams = audioStreams.Where(x => x != null).ToArray();
 
-            var audioTypes = audioStreams.Where(x => x != null).Select(x => x.AudioType).Distinct();
+            if (audioStreams.Length == 0) return;//nothing to play
+
+            var audioTypes = audioStreams.Select(x => x.AudioType).Distinct();
 
             if (audioTypes.Count() > 1) return;//can't mix audio types
 
@@ -73,7 +70,6 @@ namespace SammyFunApp
             {
                 combinedStream = new MemoryStream(CombineStreams(audioStreams.Select(x=>x.AudioData).ToArray()));
             }
-
 
             if (combinedStream == null) return;
 

@@ -264,7 +264,14 @@ namespace SammyFunApp
 
                 //when making a Pen object, you can just give it color only or give it color and pen size
 
-                g.DrawLine (new Pen(_penColor, _penSize) { DashStyle = DashStyle.Solid, StartCap = LineCap.Square, EndCap = LineCap.Square}, _lastPoint, e.Location);               
+                g.DrawLine (new Pen(_penColor, _penSize) 
+                { 
+                    DashStyle = DashStyle.Solid, 
+                    StartCap = LineCap.Round, 
+                    EndCap = LineCap.Round
+                }, 
+                _lastPoint, 
+                e.Location);               
 
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 //this is to give the drawing a more smoother, less sharper look
