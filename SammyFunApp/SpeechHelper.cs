@@ -7,11 +7,18 @@ using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
 using NAudio.Wave;
+using SammyFunApp.Utils;
 
 namespace SammyFunApp
 {
     public sealed class SpeechHelper
     {
+        protected static class SpeechConstants
+        {
+            public const string WAV = "wav";
+            public  const string MP3 = "mp3";
+        }
+
         private static readonly Lazy<SpeechHelper> lazy =
             new Lazy<SpeechHelper>(() => new SpeechHelper());
 
@@ -30,12 +37,12 @@ namespace SammyFunApp
         {
             PlayAudio(onComplete, messages);
         }
-
-        private Dictionary<string, byte[]> _audioCache = new Dictionary<string, byte[]>();
+        public class AudioFile { public string AudioType; public byte[] AudioData; }
+        private Dictionary<string, AudioFile> _audioCache = new Dictionary<string, AudioFile>();
         private void PlayAudio(Action onPlayStop, params string[] messages)
         {
             //get audio
-            byte[][] audioStreams = new byte[messages.Length][];
+            AudioFile[] audioStreams = new AudioFile[messages.Length];
             Stream combinedStream = null;
 
             string audioFileName;
@@ -44,15 +51,9 @@ namespace SammyFunApp
             {
                 audioFileName = $"SammyFunApp.Audio.{messages[i].CreateFileName()}";
 
-                if (!_audioCache.ContainsKey(audioFileName))
-                {
-
-                    var tmp = Utils.ResourceHelper.GetResourceData(audioFileName);
-
-                    if (tmp == null) continue;
-
-                    _audioCache.Add(audioFileName, tmp.ToArray());
-                }
+                if (!LoadWavFile(audioFileName))
+                    if (!LoadMp3File(audioFileName))
+                        continue;
 
                 audioStreams[i] = _audioCache[audioFileName];
 
@@ -60,11 +61,17 @@ namespace SammyFunApp
 
             if (audioStreams.Count(x => x != null) == 0) return;//nothing to play
 
+            var audioTypes = audioStreams.Where(x => x != null).Select(x => x.AudioType).Distinct();
+
+            if (audioTypes.Count() > 1) return;//can't mix audio types
+
+            string audioType = audioTypes.First();
+
             if (audioStreams.Length == 1)
-                combinedStream = new MemoryStream(audioStreams[0]);
+                combinedStream = new MemoryStream(audioStreams[0].AudioData);
             else
             {
-                combinedStream = new MemoryStream(CombineStreams(audioStreams));
+                combinedStream = new MemoryStream(CombineStreams(audioStreams.Select(x=>x.AudioData).ToArray()));
             }
 
 
@@ -75,7 +82,7 @@ namespace SammyFunApp
             combinedStream.Position = 0;
 
             _wavPlayer = new WaveOutEvent();
-            var audioReader = new WaveFileReader(combinedStream);
+            var audioReader = GetAudioReader(audioType, combinedStream);
             _wavPlayer.Init(audioReader);
             _wavPlayer.Play();
 
@@ -84,6 +91,53 @@ namespace SammyFunApp
                 onPlayStop?.Invoke();
                 _wavPlayer.Dispose();
             };
+        }
+
+        private IWaveProvider GetAudioReader(string audioType, Stream audioStream)
+        {
+            switch (audioType.ToLower())
+            {
+                case SpeechConstants.WAV:
+                    return new WaveFileReader(audioStream);
+                case SpeechConstants.MP3:
+                    return new Mp3FileReader(audioStream);
+                default:
+                    break;
+            }
+
+            return new WaveFileReader(audioStream);
+        }
+
+        private bool LoadMp3File(string audioFileName)
+        {          
+
+            if (_audioCache.ContainsKey(audioFileName)) return true;
+
+            string fullAudioFileName = string.Concat(audioFileName, ".", SpeechConstants.MP3);
+
+            var tmp = Utils.ResourceHelper.GetResourceData(fullAudioFileName);
+
+            if (tmp == null) return false;
+
+            _audioCache.Add(audioFileName, new AudioFile() { AudioType = SpeechConstants.MP3, AudioData = tmp.ToArray() });
+
+            return true;
+        }
+
+        private bool LoadWavFile(string audioFileName)
+        { 
+            if (_audioCache.ContainsKey(audioFileName)) return true;
+
+            string fullAudioFileName = string.Concat(audioFileName, ".", SpeechConstants.WAV);
+
+            var tmp = Utils.ResourceHelper.GetResourceData(fullAudioFileName);
+
+            if (tmp == null) return false;
+
+            _audioCache.Add(audioFileName, new AudioFile() { AudioType = SpeechConstants.WAV, AudioData = tmp.ToArray() });
+
+            return true;
+
         }
 
         private byte[] CombineStreams(Stream[] audioStreams)

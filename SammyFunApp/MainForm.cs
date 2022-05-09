@@ -279,7 +279,7 @@ namespace SammyFunApp
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SpeechHelper.Instance.Speak("Night night Sammy");
+            SpeechHelper.Instance.Speak("bye bye Sammy");
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)

@@ -70,18 +70,18 @@ namespace SammyFunApp
             this.MouseClick += PeekabooBuddy_MouseClick;
             this.ParentChanged += PeekabooBuddy_ParentChanged;
             _timer.Elapsed += _timer_Tick;
-            _carPausetimer.Elapsed += _carPausetimer_Tick;
+            //_carPausetimer.Elapsed += _carPausetimer_Tick;
 
             _peekabooBuddyNames = peekabooBuddyNames;
             InitializeBuddy(0);
         }
 
-        private void _carPausetimer_Tick(object sender, EventArgs e)
-        {
-            _carPausetimer.Stop();
-            SetVisibility(true);
-            _timer.Start();
-        }
+        //private void _carPausetimer_Tick(object sender, EventArgs e)
+        //{
+        //    _carPausetimer.Stop();
+        //    SetVisibility(true);
+        //    _timer.Start();
+        //}
 
         private void PeekabooBuddy_ParentChanged(object sender, EventArgs e)
         {
@@ -192,29 +192,38 @@ namespace SammyFunApp
         private delegate void SafeCallDelegateVisible(bool visible);
         private void SetVisibility(bool visible)
         {
-            if (this.InvokeRequired)
+            try
             {
-                var d = new SafeCallDelegateVisible(SetVisibility);
-                this.Invoke(d, new object[] { visible });
+                if (this.InvokeRequired)
+                {
+                    var d = new SafeCallDelegateVisible(SetVisibility);
+                    this.Invoke(d, new object[] { visible });
+                }
+                else
+                {
+                    this.Visible = visible;
+                }
             }
-            else
-            {
-                this.Visible = visible;
-            }
+            finally
+            { }
         }
 
         private delegate void SafeCallDelegateLocation(Point point);
         private void SetLocation(Point point)
         {
-            if (this.InvokeRequired)
+            try
             {
-                var d = new SafeCallDelegateLocation(SetLocation);
-                this.Invoke(d, new object[] { point });
+                if (this.InvokeRequired)
+                {
+                    var d = new SafeCallDelegateLocation(SetLocation);
+                    this.Invoke(d, new object[] { point });
+                }
+                else
+                {
+                    this.Location = point;
+                }
             }
-            else
-            {
-                this.Location = point;
-            }
+            finally { }
         }
 
         private void SetDestination(int x, int y)

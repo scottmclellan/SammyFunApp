@@ -22,16 +22,18 @@ namespace SammyFunApp
                 buddy.Start();
         }
 
+        public static string CreateFileNameWav(this string word)
+        {
+            return $"{CreateFileName(word)}.wav";
+        }
         public static string CreateFileName(this string word)
         {
-            string fileName = Regex.Replace(word.ToLower(), "[^a-zA-Z0-9 -]", "");
-            return $"{CreateMD5(fileName)}.wav";
+           return CreateMD5(Regex.Replace(word.ToLower(), "[^a-zA-Z0-9 -]", ""));
         }
 
         public static string CreateFileNameMp3(this string word)
         {
-            string fileName = Regex.Replace(word.ToLower(), "[^a-zA-Z0-9 -]", "");
-            return $"{CreateMD5(fileName)}.wav";
+            return $"{CreateFileName(word)}.mp3";
         }
 
         public static string CreateMD5(string input)

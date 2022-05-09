@@ -224,7 +224,7 @@
     <EmbeddedResource Include="Audio\4568c103426a8464217007d9c4225caf.wav" />
     <EmbeddedResource Include="Audio\46c48bec0d282018b9d167eef7711b2c.wav" />
     <EmbeddedResource Include="Audio\74e8333ad11685ff3bdae589c8f6e34d.wav" />
-    <Content Include="Audio\172b0a6f17667e5dfdaa5759b03d0763.wav" />
+    <EmbeddedResource Include="Audio\172b0a6f17667e5dfdaa5759b03d0763.wav" />
     <EmbeddedResource Include="Audio\4f86627a9ae4eb1e24b747afab2a526e.wav" />
     <EmbeddedResource Include="Audio\5001232fc3601dda297ffbda82b10dd1.wav" />
     <EmbeddedResource Include="Audio\9ded4e5c5b111bd46a9f21a922a72d87.wav" />
@@ -232,6 +232,9 @@
     <EmbeddedResource Include="Audio\c4aa526dbcb2e15e58c12bb273b8f365.wav" />
     <EmbeddedResource Include="Audio\e3aae9523079f22ff0b8676c12334dfc.wav" />
     <EmbeddedResource Include="Audio\f67749043afcd97ccabac71cb5cdfb6a.wav" />
+    <EmbeddedResource Include="Audio\3ca3861a5c2392341fa31cae2be3eff0.wav" />
+    <EmbeddedResource Include="Audio\967bfb6d33e8993c73bb1a630fee8c55.wav" />
+    <EmbeddedResource Include="Audio\006b3c787f8591cf730d77d6bf8509cb.mp3" />
     <Content Include="Resources\license.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -293,6 +296,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Configuration.ConfigurationManager">
+      <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
