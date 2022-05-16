@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
+using Microsoft.Win32.SafeHandles;
 using SammyFunApp.Utils;
 using static SammyFunApp.Utils.ResourceHelper;
 
@@ -19,18 +21,35 @@ namespace SammyFunApp
 {
     public partial class MainForm : Form
     {
+        private DrawingCanvas _drawingCanvas;
+
         public MainForm()
         {
             InitializeComponent();
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+
+            _drawingCanvas = new DrawingCanvas();
+
+            this.elementHost1.Child = _drawingCanvas;
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0,0,0,0,33);
+            _timer.Tick += _timer_Tick;
+
+        }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            Buddy buddy = new Buddy("mater");
+
+            this._drawingCanvas.Children.Add(buddy);
         }
 
         private FormBorderStyle onLoadBorderStyle;
         private Rectangle onLoadBounds;
         private ColourDatabase _colourDB;
-        private List<PeekabooBuddy> _peekabooBuddies = new List<PeekabooBuddy>();
+        private readonly DispatcherTimer _timer;
         private void Form1_Load(object sender, EventArgs e)
         {
             Text = "Sammy's Paint Shop";
@@ -43,17 +62,11 @@ namespace SammyFunApp
 
             var cur = CursorHelper.GetColourCursor(Color.Black, CursorHelper.AppCursor.Pen);
 
-            this.Cursor = cur;
+            SetCursor(cur);
 
             string dayText = TranslateIntToWords(DateTime.Now.Day);
 
             PlayGreeting();
-
-            //SpeechHelperMp3.Instance.Speak("Good morning", "Good morning");
-            //Action b1 = () => SpeechHelper.Instance.Speak("boing");
-            //SpeechHelper.Instance.SpeakAsync(b1, "boing");
-
-            //SpeechHelper.Instance.Speak("boing", "boing", "boing", "boing", "boing", "boing", "boing");
 
             ToolStripButton[] buttons = {
                 new PaintColourButton("Red",null, CustomToolStripButtonOnCLick,Color.Red),
@@ -77,10 +90,21 @@ namespace SammyFunApp
 
             this.toolStrip1.Items.AddRange(buttons);
 
-            var bunnyPeekaBoo = new PeekabooBuddy("mcqueen", "mater", "doc", "mcmissile", "luigi", "sally");
-            this.pictureBox1.Controls.Add(bunnyPeekaBoo);
-            this._peekabooBuddies.Add(bunnyPeekaBoo);
-            bunnyPeekaBoo.Start();
+            //var bunnyPeekaBoo = new PeekabooBuddy("mcqueen", "mater", "doc", "mcmissile", "luigi", "sally");
+            //this.drawingPanel.Controls.Add(bunnyPeekaBoo);
+            // this._peekabooBuddies.Add(bunnyPeekaBoo);
+            //bunnyPeekaBoo.Start();
+
+
+            _timer.Start();
+
+        }
+
+        private void SetCursor(Cursor cur)
+        {
+            SafeFileHandle panHandle = new SafeFileHandle(cur.Handle, false);
+            elementHost1.Cursor = this.Cursor = cur;
+            _drawingCanvas.Cursor = System.Windows.Interop.CursorInteropHelper.Create(panHandle);
 
         }
 
@@ -128,7 +152,7 @@ namespace SammyFunApp
             }
 
             if (sender is PaintBrushSizeButton)
-            {                
+            {
                 var button = sender as PaintBrushSizeButton;
 
                 this.toolStrip1.Enabled = false;
@@ -138,9 +162,9 @@ namespace SammyFunApp
                 else
                     SpeechHelper.Instance.SpeakAsync(() => this.toolStrip1.Enabled = true, "down");
 
-                _previousSize= _penSize = button.PenSize;
-                
-                this.Cursor = CursorHelper.GetColourCursor(_penColor, CursorHelper.AppCursor.Pen, CursorHelper.GetCursorSize(_penSize));
+                _previousSize = _penSize = _drawingCanvas.PenThickness = button.PenSize;
+
+                SetCursor(CursorHelper.GetColourCursor(_penColor, CursorHelper.AppCursor.Pen, CursorHelper.GetCursorSize(button.PenSize)));
                 return;
             }
 
@@ -175,9 +199,10 @@ namespace SammyFunApp
                     else
                         SpeechHelper.Instance.SpeakAsync(() => toolStrip1.Enabled = true, button.Text, $"You can draw a {colourObject.Name}. {colourObject.Description}");
                 }
-
                 _penColor = button.BackColor;
-                this.Cursor = CursorHelper.GetColourCursor(_penColor, CursorHelper.AppCursor.Pen, CursorHelper.GetCursorSize(_penSize));
+
+                _drawingCanvas.PenColor = System.Windows.Media.Color.FromArgb(button.BackColor.A, button.BackColor.R, button.BackColor.G, button.BackColor.B);
+                SetCursor(CursorHelper.GetColourCursor(button.BackColor, CursorHelper.AppCursor.Pen, CursorHelper.GetCursorSize(_penSize)));
                 return;
 
             }
@@ -207,9 +232,7 @@ namespace SammyFunApp
 
         private void ClearPictureBox()
         {
-            //_lastPictureBoxImage = null;
-            pictureBox1.Image = null;
-            pictureBox1.Invalidate();
+            _drawingCanvas.ClearDrawing();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -219,80 +242,11 @@ namespace SammyFunApp
             if (e.KeyCode == Keys.C) _cPressed = false;
         }
 
-        private List<Point> _drawPoints = new List<Point>();
-        private Point _lastPoint = Point.Empty;
-        private bool rightMouseButtonClicked = false;
-
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            _lastPoint = e.Location;
-            rightMouseButtonClicked = true;
-
-        }
-
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            _lastPoint = Point.Empty;
-            rightMouseButtonClicked = false;
-        }
-
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!rightMouseButtonClicked) return;
-
-            if (_lastPoint == null) return;
-
-
-            if (pictureBox1.Image == null)//if no available bitmap exists on the picturebox to draw on
-
-            {
-                //create a new bitmap
-                Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-
-                pictureBox1.Image = bmp; //assign the picturebox.Image property to the bitmap created
-
-            }
-
-            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
-
-            {//we need to create a Graphics object to draw on the picture box, its our main tool
-
-                //when making a Pen object, you can just give it color only or give it color and pen size
-
-                g.DrawLine (new Pen(_penColor, _penSize) 
-                { 
-                    DashStyle = DashStyle.Solid, 
-                    StartCap = LineCap.Round, 
-                    EndCap = LineCap.Round
-                }, 
-                _lastPoint, 
-                e.Location);               
-
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                //this is to give the drawing a more smoother, less sharper look
-
-            }
-
-            pictureBox1.Invalidate();//refreshes the picturebox
-
-            _lastPoint = e.Location;//keep assigning the lastPoint to the current mouse position
-
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             SpeechHelper.Instance.Speak("bye bye Sammy");
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         public void SetScreenMode()
         {
