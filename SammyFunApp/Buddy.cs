@@ -34,33 +34,29 @@ namespace SammyFunApp
 
         private void SetImage()
         {
-            Stream image = null;
+
+            string image = "SammyFunApp;/Images/{0}.png";
 
             switch (_state)
             {
                 case BuddyState.Winking:
-                    image =Images.ResourceManager.GetStream($"{_character}_wink");
+                    image = string.Format(image, $"{_character}_wink");
                     break;
                 case BuddyState.RunningAway:
-                    image = Images.ResourceManager.GetStream($"{_character}");
+                    image = string.Format(image, $"{_character}");
                     break;
                 case BuddyState.Peeking:
-                    image = Images.ResourceManager.GetStream($"{_character}");
+                    image = string.Format(image, $"{_character}");
                     break;
                 case BuddyState.Caught:
-                    image = Images.ResourceManager.GetStream($"{_character}_scared");
+                    image = string.Format(image, $"{_character}_scared");
                     break;
                 default:
                     break;
             }
 
-            BitmapImage bmp = new BitmapImage();
-
-            bmp.BeginInit();
-
-            bmp.StreamSource = image;
-
-            bmp.EndInit();
+           
+            var bmp = new BitmapImage(new Uri(image));
 
             this.Source = bmp;
             this.RenderSize = new Size(bmp.Width, bmp.Height);

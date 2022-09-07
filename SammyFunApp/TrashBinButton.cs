@@ -12,7 +12,7 @@ namespace SammyFunApp
     {
 
         public TrashBinButton( EventHandler eventHandler) 
-            : base("", Images.Trash_can_icon, eventHandler)
+            : base("", null, eventHandler)
         {
             AutoSize = false;
             Width = 80;

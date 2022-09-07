@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 namespace SammyFunApp.Utils
 {
@@ -72,24 +73,39 @@ namespace SammyFunApp.Utils
         {
             IntPtr Hicon = new IntPtr();
 
-            using (var tempCurStream = ResourceHelper.GetResourceData($"SammyFunApp.Images.{cursor.Value}.ico"))
+            BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/SammyFunApp;/Images/pen.ico"));
+
+            Bitmap bmp;
+
+            using (MemoryStream outStream = new MemoryStream())
             {
-                var bmp = new Bitmap(System.Drawing.Image.FromStream(tempCurStream), new Size(16 * size,16*size));
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
+                enc.Save(outStream);
+                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
 
-                var bmpNewColor = ChangeColor(bmp, color);
-
-                // Get an Hicon for myBitmap.
-                Hicon = bmpNewColor.GetHicon();
-
-                IconInfo tmp = new IconInfo();
-                GetIconInfo(Hicon, ref tmp);
-                tmp.xHotspot = 0;
-                tmp.yHotspot = bmp.Height;
-                tmp.fIcon = false;
-                Hicon = CreateIconIndirect(ref tmp);
-               
-                return new Cursor(Hicon);
+                bmp = new Bitmap(bitmap);
             }
+
+            //using (var tempCurStream = System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream($"SammyFunApp.Images.pen.ico"))
+            //using (var tempCurStream = System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream($"{cursor.Value}.ico"))
+            //{
+            //var bmp = new Bitmap(System.Drawing.Image.FromStream(tempCurStream), new Size(16 * size, 16 * size));
+
+            var bmpNewColor = ChangeColor(bmp, color);
+
+            // Get an Hicon for myBitmap.
+            Hicon = bmpNewColor.GetHicon();
+
+            IconInfo tmp = new IconInfo();
+            GetIconInfo(Hicon, ref tmp);
+            tmp.xHotspot = 0;
+            tmp.yHotspot = bmp.Height;
+            tmp.fIcon = false;
+            Hicon = CreateIconIndirect(ref tmp);
+
+            return new Cursor(Hicon);
+            //}
         }
 
         public static int GetCursorSize(int penSize)

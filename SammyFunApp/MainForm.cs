@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using Microsoft.Win32.SafeHandles;
 using SammyFunApp.Utils;
@@ -54,13 +55,22 @@ namespace SammyFunApp
         {
             Text = "Sammy's Paint Shop";
 
+            string[] all = System.Reflection.Assembly.GetEntryAssembly().
+  GetManifestResourceNames().Where(x=> x.EndsWith("ico")).ToArray();
+
+            MessageBox.Show(string.Join(", ", all));
+            //foreach (string one in all)
+            //{
+            //    MessageBox.Show(one);
+            //}
+
             onLoadBorderStyle = this.FormBorderStyle;
             onLoadBounds = this.Bounds;
             this.WindowState = FormWindowState.Maximized;
 
             _colourDB = ColourDatabase.Populate(Path.Combine(Application.StartupPath, @"Resources\colourdb.json"));
 
-            var cur = CursorHelper.GetColourCursor(Color.Black, CursorHelper.AppCursor.Pen);
+            var cur = CursorHelper.GetColourCursor( Color.Black, CursorHelper.AppCursor.Pen);
 
             SetCursor(cur);
 

@@ -78,6 +78,10 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FartHelper.cs" />
     <Compile Include="GoogleHelper.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="PeekabooBuddy.cs" />
     <Compile Include="TrashBinButton.cs">
       <SubType>Component</SubType>
@@ -94,11 +98,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Images.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Images.resx</DependentUpon>
-    </Compile>
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,10 +105,6 @@
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Images.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -250,10 +245,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\Trash-can-icon.png" />
+    <Resource Include="Images\Trash-can-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\pen.ico" />
+    <Resource Include="Images\pen.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\sammypaintshop.ico">
@@ -261,27 +256,27 @@
     </Content>
     <Content Include="sammypaintshop.ico" />
     <Content Include="sammyspaintshop.ico" />
-    <None Include="Images\sally_wink.png" />
-    <None Include="Images\sally_scared.png" />
-    <None Include="Images\sally.png" />
-    <None Include="Images\mcmissile_wink.png" />
-    <None Include="Images\mcmissile_scared.png" />
-    <None Include="Images\mcmissile.png" />
-    <None Include="Images\luigi_wink.png" />
-    <None Include="Images\luigi_scared.png" />
-    <None Include="Images\luigi.png" />
-    <None Include="Images\doc_wink.png" />
-    <None Include="Images\doc_scared.png" />
-    <None Include="Images\doc.png" />
-    <None Include="Images\mater_wink.png" />
-    <None Include="Images\mater_scared.png" />
-    <None Include="Images\mater.png" />
-    <None Include="Images\mcqueen_wink.png" />
-    <None Include="Images\mcqueen_scared.png" />
-    <None Include="Images\mcqueen.png" />
-    <None Include="Images\bunny_scared.png" />
-    <None Include="Images\bunny _wink.png" />
-    <Content Include="Images\bunny.png" />
+    <Resource Include="Images\sally_wink.png" />
+    <Resource Include="Images\sally_scared.png" />
+    <Resource Include="Images\sally.png" />
+    <Resource Include="Images\mcmissile_wink.png" />
+    <Resource Include="Images\mcmissile_scared.png" />
+    <Resource Include="Images\mcmissile.png" />
+    <Resource Include="Images\luigi_wink.png" />
+    <Resource Include="Images\luigi_scared.png" />
+    <Resource Include="Images\luigi.png" />
+    <Resource Include="Images\doc_wink.png" />
+    <Resource Include="Images\doc_scared.png" />
+    <Resource Include="Images\doc.png" />
+    <Resource Include="Images\mater_wink.png" />
+    <Resource Include="Images\mater_scared.png" />
+    <Resource Include="Images\mater.png" />
+    <Resource Include="Images\mcqueen_wink.png" />
+    <Resource Include="Images\mcqueen_scared.png" />
+    <Resource Include="Images\mcqueen.png" />
+    <Resource Include="Images\bunny_scared.png" />
+    <Resource Include="Images\bunny _wink.png" />
+    <Resource Include="Images\bunny.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -306,6 +301,11 @@
       <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
